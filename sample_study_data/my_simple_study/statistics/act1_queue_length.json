@@ -1,0 +1,33 @@
+{
+  "metadata": {
+    "type": "activity_metric",
+    "componentId": "act1",
+    "metricName": "queueLength",
+    "simulationId": "simple_test",
+    "replication": 1,
+    "timeStart": 0.0,
+    "timeEnd": 10.0,
+    "timeUnit": "MINUTES"
+  },
+  "summary": {
+    "min": 0,
+    "max": 2,
+    "mean": 0.8,
+    "median": 1.0,
+    "stdDev": 0.8,
+    "count": 11
+  },
+  "timeSeries": [
+    { "time": 0.0, "value": 0 },
+    { "time": 1.0, "value": 1 },
+    { "time": 2.0, "value": 1 },
+    { "time": 3.0, "value": 2 },
+    { "time": 4.0, "value": 2 },
+    { "time": 5.0, "value": 1 },
+    { "time": 6.0, "value": 1 },
+    { "time": 7.0, "value": 0 },
+    { "time": 8.0, "value": 0 },
+    { "time": 9.0, "value": 1 },
+    { "time": 10.0, "value": 0 }
+  ]
+}

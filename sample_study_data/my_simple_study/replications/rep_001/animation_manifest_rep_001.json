@@ -1,0 +1,31 @@
+{
+  "metadata": {
+    "formatVersion": "1.1",
+    "simulationId": "simple_test",
+    "replication": 1,
+    "name": "Simple Test Replication 1",
+    "duration": 100,
+    "timeUnit": "SECONDS",
+    "modelLayoutPath": "model_layout.json",
+    "sharedVisualConfigPath": "shared_visual_config.json",
+    "backgroundSvgPath": "diagram.svg"
+  },
+  "entityPathDataFiles": [
+    {
+      "filePath": "entity_paths/batch_001.json",
+      "entryTimeStart": 0.0,
+      "entryTimeEnd": 10.0,
+      "entityCount": 2
+    }
+  ],
+  "statisticsDataFiles": [
+    {
+      "type": "activity_metric",
+      "componentId": "act1",
+      "metricName": "queueLength",
+      "filePath": "statistics/act1_queue_length.json",
+      "timeStart": 0.0,
+      "timeEnd": 10.0
+    }
+  ]
+}

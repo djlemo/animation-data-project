@@ -1,0 +1,84 @@
+{
+  "entity-001": {
+    "type": "Customer",
+    "path": [
+      {
+        "clock": 0.5,
+        "x": 50,
+        "y": 150,
+        "event": "EMA",
+        "state": "arrived",
+        "componentId": "gen1"
+      },
+      {
+        "clock": 1.0,
+        "x": 100,
+        "y": 150,
+        "event": "TRV",
+        "state": "traveling",
+        "componentId": "conn1"
+      },
+      {
+        "clock": 1.5,
+        "x": 150,
+        "y": 150,
+        "event": "ARQ",
+        "state": "waiting",
+        "componentId": "act1"
+      },
+      {
+        "clock": 2.0,
+        "x": 150,
+        "y": 150,
+        "event": "ASP",
+        "state": "processing",
+        "componentId": "act1"
+      },
+      {
+        "clock": 4.0,
+        "x": 150,
+        "y": 150,
+        "event": "AEP",
+        "state": "processing",
+        "componentId": "act1"
+      },
+      {
+        "clock": 4.1,
+        "x": 200,
+        "y": 150,
+        "event": "EME",
+        "state": "exited",
+        "componentId": null
+      }
+    ]
+  },
+  "entity-002": {
+    "type": "Customer",
+    "path": [
+      {
+        "clock": 1.5,
+        "x": 50,
+        "y": 150,
+        "event": "EMA",
+        "state": "arrived",
+        "componentId": "gen1"
+      },
+      {
+        "clock": 2.0,
+        "x": 100,
+        "y": 150,
+        "event": "TRV",
+        "state": "traveling",
+        "componentId": "conn1"
+      },
+      {
+        "clock": 2.5,
+        "x": 150,
+        "y": 140,
+        "event": "ARQ",
+        "state": "waiting",
+        "componentId": "act1"
+      }
+    ]
+  }
+}

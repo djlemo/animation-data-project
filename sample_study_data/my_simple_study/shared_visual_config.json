@@ -1,0 +1,8 @@
+{
+  "formatVersion": "1.1",
+  "simulationId": "simple_test",
+  "visualization": {
+    "backgroundMode": "color",
+    "backgroundColor": "#f0f0f0"
+  }
+}
