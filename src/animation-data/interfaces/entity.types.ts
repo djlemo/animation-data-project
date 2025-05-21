@@ -30,6 +30,8 @@ export interface BasicEntityPath {
  * Represents a batch of entity paths loaded from a file
  */
 export interface EntityPathBatch {
+    entities: any;
+    entityPaths: any;
     /** Array of entity paths */
     paths: BasicEntityPath[];
     

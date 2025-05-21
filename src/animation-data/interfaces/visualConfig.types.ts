@@ -2,6 +2,7 @@
  * Represents the shared visual configuration
  */
 export interface SharedVisualConfig {
+    backgroundMode: any;
     /** Version of the format */
     formatVersion: string;
     

@@ -16,6 +16,7 @@ export interface FileListItem {
  * Interface for reading files from a data source
  */
 export interface FileReader {
+    readJSONFile<T>(modelLayoutPath: string): import("..").ModelLayout | PromiseLike<import("..").ModelLayout>;
     /**
      * Reads a file and returns its contents as a string
      * 

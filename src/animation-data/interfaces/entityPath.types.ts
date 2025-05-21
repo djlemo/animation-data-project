@@ -28,6 +28,7 @@ export interface PathPoint {
  * Represents an entity's complete path through the simulation
  */
 export interface EntityPath {
+    entityId(entityId: any): unknown;
     /** Type of the entity (e.g., "Customer", "Patient") */
     type: string;
     
@@ -37,11 +38,32 @@ export interface EntityPath {
 
 /**
  * Structure of an entity path batch file
- * Maps entity IDs to their paths
  */
 export interface EntityPathBatch {
-    /** Map of entity IDs to their path data */
-    [entityId: string]: EntityPath;
+    /** Metadata about this batch */
+    metadata: {
+        formatVersion: string;
+        simulationId: string;
+        replicationId: string;
+        batchId: string;
+        description: string;
+        createdAt: string;
+    };
+    
+    /** Array of entities and their paths */
+    entities: {
+        id: string;
+        type: string;
+        entryTime: number;
+        path: {
+            x: number;
+            y: number;
+            time: number;
+            activity: string;
+            state: string;
+            duration: number;
+        }[];
+    }[];
 }
 
 /**

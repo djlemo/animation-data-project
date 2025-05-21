@@ -88,6 +88,15 @@ export interface StatisticsSummary {
  * Complete statistics data for a single metric
  */
 export interface StatisticsData {
+    /** Type of statistic */
+    type: string;
+    
+    /** ID of the component this statistic is for */
+    componentId: string;
+    
+    /** Name of the metric */
+    metricName: string;
+    
     /** Metadata about this statistic */
     metadata: StatisticsMetadata;
     

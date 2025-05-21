@@ -25,9 +25,33 @@ export class NodeFileReader implements FileReader {
     }
     
     /**
+     * Reads a JSON file and parses it
+     * 
+     * @param filePath Path to the JSON file, relative to the root directory
+     * @returns Promise resolving to the parsed JSON object
+     */
+    async readJSONFile<T>(filePath: string): Promise<T> {
+        const fileContent = await this.readFileAsText(filePath);
+        if (!fileContent) {
+            throw new Error(`Failed to read JSON file: ${filePath}`);
+        }
+        
+        try {
+            return JSON.parse(fileContent) as T;
+        } catch (error: any) {
+            throw new Error(`Failed to parse JSON file ${filePath}: ${error.message}`);
+        }
+    }
+    
+    /**
      * Resolves a relative path to an absolute path
      */
     resolveFullPath(relativePath: string): string {
+        // Check if the path is already absolute (starts with drive letter on Windows)
+        if (nodePath.isAbsolute(relativePath)) {
+            return relativePath;
+        }
+        
         // Remove leading ./ if present
         const cleanPath = relativePath.replace(/^\.\//, '');
         return nodePath.join(this.studyRootAbsPath, cleanPath);

@@ -9,13 +9,23 @@ async function runStandaloneTest() {
     console.log('--- Starting AnimationData Standalone Test ---');
     
     // Path to our test data directory
-    // __dirname is the directory containing the current file
-    const studyPath = path.resolve(__dirname, '..', 'sample_study_data', 'my_simple_study');
+    // Using the root directory of the grocery store simulation project
+    const studyPath = 'C:\\_source\\grocery-store-simulation\\animation-app\\public';
     console.log(`Targeting study path: ${studyPath}`);
     
     try {
         // Create a file reader pointing to our test data
         const nodeReader = new NodeFileReader(studyPath);
+        
+        // Verify that critical files exist
+        const modelLayoutPath = 'model_layout.json';
+        const visualConfigPath = 'replications/rep_001/visual_config.json';
+        
+        const modelLayoutFullPath = nodeReader.resolveFullPath(modelLayoutPath);
+        const visualConfigFullPath = nodeReader.resolveFullPath(visualConfigPath);
+        
+        console.log(`Checking model layout at: ${modelLayoutFullPath}`);
+        console.log(`Checking visual config at: ${visualConfigFullPath}`);
         
         // Create an AnimationData instance using the reader
         const animData = new AnimationData(nodeReader);
@@ -32,25 +42,56 @@ async function runStandaloneTest() {
         // Check if we have a model layout
         if (animData.modelLayout) {
             console.log(`\nModel Layout Loaded: Simulation ID "${animData.modelLayout.simulationId}"`);
-        } else {
-            console.error('\nModel Layout FAILED to load.');
         }
         
-        // Check if we have a visual configuration
+        // Check if we have visual configuration
         if (animData.sharedVisualConfig) {
-            console.log(`Shared Visual Config Loaded: Background mode "${animData.sharedVisualConfig.visualization.backgroundMode}"`);
-        } else {
-            console.error('\nShared Visual Config FAILED to load.');
+            console.log(`Shared Visual Config Loaded: Background mode "${animData.sharedVisualConfig.backgroundMode}"`);
         }
         
-        // If we found at least one replication, test activating it
-        if (animData.availableReplications.size > 0) {
-            const firstRepId = Array.from(animData.availableReplications.keys())[0];
-            await animData.setActiveReplication(firstRepId);
+        // Set active replication to ID 1
+        await animData.setActiveReplication(1);
+        
+        // Display entity path information
+        const entityIds = animData.getLoadedEntityIds();
+        console.log(`\nLoaded Entity Paths (${entityIds.length} entities):`);
+        
+        entityIds.forEach(entityId => {
+            const state = animData.getEntityStateAtTime(entityId, 0);
+            const entityType = animData.getEntitiesByType(state?.state || '').has(entityId) ? state?.state : 'unknown';
+            console.log(`  Entity ${entityId} (Type: ${entityType}):`);
             
-            const metadata = animData.getActiveReplicationMetadata();
-            console.log(`\nActive Replication Metadata: ${JSON.stringify(metadata, null, 2)}`);
-        }
+            // Get entity path points
+            const path = animData.getEntitiesInTimeRange(0, 3600).get(entityId);
+            if (path) {
+                const firstPoint = path.path[0];
+                const lastPoint = path.path[path.path.length - 1];
+                console.log(`    Start: (${firstPoint.x}, ${firstPoint.y}) at time ${firstPoint.clock}`);
+                console.log(`    End: (${lastPoint.x}, ${lastPoint.y}) at time ${lastPoint.clock}`);
+                console.log(`    Total path points: ${path.path.length}`);
+                
+                // Show some activities along the path
+                console.log('    Key activities:');
+                path.path
+                    .filter(point => point.event && point.event !== '')
+                    .forEach(point => {
+                        console.log(`      - ${point.event} at time ${point.clock} (state: ${point.state})`);
+                    });
+            }
+        });
+        
+        // Show some time-based queries
+        console.log('\nEntity States at Different Times:');
+        [0, 30, 60, 90].forEach(time => {
+            const activeEntities = Array.from(animData.getEntityIdsAtTime(time));
+            console.log(`\nTime ${time} - Active Entities: ${activeEntities.length}`);
+            activeEntities.forEach(entityId => {
+                const state = animData.getEntityStateAtTime(entityId, time);
+                if (state) {
+                    console.log(`  ${entityId}: ${state.state} at (${Math.round(state.x)}, ${Math.round(state.y)})`);
+                }
+            });
+        });
         
     } catch (err) {
         console.error("\n--- Test Failed ---");
@@ -63,7 +104,7 @@ async function runStandaloneTest() {
 async function runEntityPathTest() {
     console.log('=== AnimationData Entity Path Test ===');
     
-    const studyPath = path.resolve(__dirname, '..', 'sample_study_data', 'my_simple_study');
+    const studyPath = path.normalize('C:/_source/grocery-store-simulation/animation-app/public');
     console.log(`Target study path: ${studyPath}`);
     
     try {
@@ -153,4 +194,4 @@ async function runEntityPathTest() {
 
 // Run the tests
 runStandaloneTest();
-runEntityPathTest().catch(console.error);
+// runEntityPathTest().catch(console.error);
